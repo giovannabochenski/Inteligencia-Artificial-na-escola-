@@ -1,84 +1,104 @@
-// Banco de perguntas sobre IA na escola
+// 🌸 Banco de perguntas - Vestibular / Ciências
 const quizData = [
   {
-    question: "O que significa a sigla 'IA'?",
+    question: "Qual é o principal gás responsável pelo efeito estufa emitido pela queima de combustíveis fósseis?",
     options: [
-      "Inteligência Analógica",
-      "Inteligência Artificial",
-      "Interação Automatizada",
-      "Informática Aplicada"
+      "Oxigênio (O₂)",
+      "Gás carbônico (CO₂)",
+      "Nitrogênio (N₂)",
+      "Hélio (He)"
     ],
     answer: 1
   },
   {
-    question: "Qual ferramenta de IA pode ajudar a criar resumos de textos escolares?",
+    question: "Na cadeia alimentar, as plantas ocupam qual nível trófico?",
     options: [
-      "ChatGPT",
-      "Microsoft Word",
-      "Google Maps",
-      "Calculadora"
+      "Consumidores primários",
+      "Produtores",
+      "Consumidores secundários",
+      "Decompositores"
+    ],
+    answer: 1
+  },
+  {
+    question: "Qual organela celular é responsável pela respiração celular e produção de ATP?",
+    options: [
+      "Ribossomo",
+      "Mitocôndria",
+      "Lisossomo",
+      "Complexo de Golgi"
+    ],
+    answer: 1
+  },
+  {
+    question: "A Lei de Newton que afirma 'toda ação gera uma reação de igual intensidade e sentido oposto' é a:",
+    options: [
+      "Primeira Lei",
+      "Segunda Lei",
+      "Terceira Lei",
+      "Lei da Gravitação Universal"
+    ],
+    answer: 2
+  },
+  {
+    question: "Qual é o pH de uma solução neutra?",
+    options: [
+      "0",
+      "7",
+      "14",
+      "1"
+    ],
+    answer: 1
+  },
+  {
+    question: "Qual é o maior planeta do Sistema Solar?",
+    options: [
+      "Saturno",
+      "Terra",
+      "Júpiter",
+      "Netuno"
+    ],
+    answer: 2
+  },
+  {
+    question: "Em genética, o que são alelos?",
+    options: [
+      "Formas alternativas de um mesmo gene",
+      "Cromossomos sexuais",
+      "Proteínas do DNA",
+      "Células reprodutivas"
     ],
     answer: 0
   },
   {
-    question: "Na escola, a IA pode ser usada para:",
+    question: "Qual fenômeno explica a separação de cores da luz branca ao passar por um prisma?",
     options: [
-      "Substituir completamente os professores",
-      "Criar atividades personalizadas para alunos",
-      "Impedir o acesso à internet",
-      "Corrigir provas sem critério algum"
+      "Reflexão",
+      "Refração",
+      "Dispersão",
+      "Difração"
+    ],
+    answer: 2
+  },
+  {
+    question: "A função do ribossomo na célula é:",
+    options: [
+      "Produzir energia",
+      "Sintetizar proteínas",
+      "Armazenar DNA",
+      "Digerir moléculas"
     ],
     answer: 1
   },
   {
-    question: "Qual dessas é uma preocupação ética no uso de IA na educação?",
+    question: "Qual é a unidade de medida de força no Sistema Internacional (SI)?",
     options: [
-      "A IA deixar os alunos mais inteligentes",
-      "A privacidade dos dados dos estudantes",
-      "O excesso de lições de casa",
-      "A velocidade da internet"
+      "Joule (J)",
+      "Watt (W)",
+      "Newton (N)",
+      "Pascal (Pa)"
     ],
-    answer: 1
-  },
-  {
-    question: "O que é 'aprendizado de máquina' (machine learning)?",
-    options: [
-      "Um tipo de máquina de escrever moderna",
-      "Um ramo da IA que permite sistemas aprenderem com dados",
-      "Um jogo educativo",
-      "Um método de ensino tradicional"
-    ],
-    answer: 1
-  },
-  {
-    question: "Como a IA pode auxiliar alunos com dificuldades de aprendizagem?",
-    options: [
-      "Oferecendo tutoria personalizada e adaptativa",
-      "Dando notas mais altas automaticamente",
-      "Fazendo a lição por eles",
-      "Ignorando suas necessidades"
-    ],
-    answer: 0
-  },
-  {
-    question: "Qual é um exemplo de IA generativa?",
-    options: [
-      "DALL-E (gerador de imagens)",
-      "Excel",
-      "Windows",
-      "Google Chrome"
-    ],
-    answer: 0
-  },
-  {
-    question: "O uso responsável da IA na escola envolve:",
-    options: [
-      "Copiar respostas da IA sem citar",
-      "Usar como ferramenta de apoio, mantendo o pensamento crítico",
-      "Deixar a IA tomar todas as decisões",
-      "Proibir qualquer tecnologia"
-    ],
-    answer: 1
+    answer: 2
   }
 ];
 
@@ -93,9 +113,11 @@ const optionsContainer = document.getElementById('optionsContainer');
 const feedbackMessage = document.getElementById('feedbackMessage');
 const nextButton = document.getElementById('nextButton');
 const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
 const quizArea = document.getElementById('quizArea');
 const resultScreen = document.getElementById('resultScreen');
 const scoreText = document.getElementById('scoreText');
+const resultMessage = document.getElementById('resultMessage');
 const restartButton = document.getElementById('restartButton');
 const themeToggle = document.getElementById('themeToggle');
 const themeIcon = themeToggle.querySelector('.theme-icon');
@@ -105,12 +127,14 @@ const themeIcon = themeToggle.querySelector('.theme-icon');
 function updateProgress() {
   const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
   progressBar.style.width = `${progress}%`;
+  progressText.textContent = `${currentQuestionIndex + 1}/${quizData.length}`;
 }
 
 function loadQuestion() {
   answered = false;
   nextButton.disabled = true;
   feedbackMessage.textContent = '';
+  feedbackMessage.style.background = '';
 
   const currentQuestion = quizData[currentQuestionIndex];
   questionText.textContent = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
@@ -132,6 +156,13 @@ function loadQuestion() {
     optionsContainer.appendChild(button);
   });
 
+  // Atualizar botão da última pergunta
+  if (currentQuestionIndex === quizData.length - 1) {
+    nextButton.textContent = 'Ver resultado 🌸';
+  } else {
+    nextButton.textContent = 'Próxima pergunta →';
+  }
+
   updateProgress();
 }
 
@@ -151,86 +182,7 @@ function selectOption(selectedIndex, selectedButton) {
   if (isCorrect) {
     selectedButton.classList.add('correct');
     score++;
-    feedbackMessage.textContent = '✅ Resposta correta! Muito bem!';
+    feedbackMessage.textContent = '🌸 Resposta correta! Você arrasou!';
   } else {
     selectedButton.classList.add('wrong');
-    feedbackMessage.textContent = `❌ Resposta incorreta. A resposta certa é: ${currentQuestion.options[currentQuestion.answer]}`;
-    allOptions[currentQuestion.answer].classList.add('correct');
-  }
-
-  nextButton.disabled = false;
-}
-
-function nextQuestion() {
-  if (!answered) return;
-
-  currentQuestionIndex++;
-
-  if (currentQuestionIndex < quizData.length) {
-    loadQuestion();
-  } else {
-    showResult();
-  }
-}
-
-function showResult() {
-  quizArea.classList.add('hidden');
-  resultScreen.classList.remove('hidden');
-  
-  const totalQuestions = quizData.length;
-  scoreText.textContent = `Você acertou ${score} de ${totalQuestions} perguntas!`;
-
-  progressBar.style.width = '100%';
-}
-
-function restartQuiz() {
-  currentQuestionIndex = 0;
-  score = 0;
-  answered = false;
-
-  resultScreen.classList.add('hidden');
-  quizArea.classList.remove('hidden');
-
-  progressBar.style.width = '0%';
-  loadQuestion();
-}
-
-// ============ FUNÇÕES DE TEMA ============
-
-function toggleTheme() {
-  document.body.classList.toggle('dark-theme');
-  const isDark = document.body.classList.contains('dark-theme');
-  
-  // Atualizar ícone
-  themeIcon.textContent = isDark ? '☀️' : '🌙';
-  
-  // Salvar preferência
-  try {
-    localStorage.setItem('quizIA-theme', isDark ? 'dark' : 'light');
-  } catch (e) {
-    // localStorage pode não estar disponível
-  }
-}
-
-function loadSavedTheme() {
-  try {
-    const savedTheme = localStorage.getItem('quizIA-theme');
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark-theme');
-      themeIcon.textContent = '☀️';
-    }
-  } catch (e) {
-    // Ignora erros de localStorage
-  }
-}
-
-// ============ EVENT LISTENERS ============
-
-nextButton.addEventListener('click', nextQuestion);
-restartButton.addEventListener('click', restartQuiz);
-themeToggle.addEventListener('click', toggleTheme);
-
-// ============ INICIALIZAÇÃO ============
-
-loadSavedTheme();
-loadQuestion();
+    feedbackMessage.textContent = `💔 Resposta incorreta. A certa é: ${currentQuestion.options[currentQuestion.answer]}`;

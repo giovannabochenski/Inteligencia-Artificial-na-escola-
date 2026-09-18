@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RasinformaticA</title>
+  <title>🌸 Quiz Vestibular - Ciências</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Botão de alternância de tema -->
@@ -14,13 +17,21 @@
 
   <div class="quiz-container">
     <header>
-      <h1>🤖 IA na Escola🤯</h1>
-      <p>Teste seus conhecimentos sobre inteligência artificial no ambiente escolar</p>
+      <div class="header-decoration">
+        <span class="sparkle">✨</span>
+        <span class="sparkle">🌸</span>
+        <span class="sparkle">✨</span>
+      </div>
+      <h1>🌸 Quiz Vestibular 🌸</h1>
+      <p class="subtitle">Teste seus conhecimentos em Ciências e arrase no vestibular!</p>
     </header>
 
     <!-- Barra de progresso -->
-    <div class="progress">
-      <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-wrapper">
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <span class="progress-text" id="progressText">0/0</span>
     </div>
 
     <!-- Área principal do quiz -->
@@ -32,19 +43,21 @@
 
       <div class="feedback-area">
         <p id="feedbackMessage"></p>
-        <button id="nextButton" disabled>Próxima pergunta</button>
+        <button id="nextButton" disabled>Próxima pergunta →</button>
       </div>
     </main>
 
     <!-- Tela de resultado -->
     <div id="resultScreen" class="result-screen hidden">
-      <h2>Quiz concluído! 🎉</h2>
+      <div class="result-emoji">🎉</div>
+      <h2>Quiz concluído!</h2>
       <p id="scoreText"></p>
-      <button id="restartButton">Jogar novamente</button>
+      <p class="result-message" id="resultMessage"></p>
+      <button id="restartButton">🌸 Jogar novamente 🌸</button>
     </div>
   </div>
 
-  <!-- Footer vertical com contatos -->
+  <!-- Footer com contatos -->
   <footer class="contact-footer">
     <a href="https://wa.me/5500000000000" 
        target="_blank" 
@@ -57,7 +70,7 @@
       <span class="contact-label">WhatsApp</span>
     </a>
     
-    <a href="https://github.com/professor-rafael" 
+    <a href="https://github.com/giovannabochenski" 
        target="_blank" 
        rel="noopener noreferrer" 
        class="contact-link github" 
