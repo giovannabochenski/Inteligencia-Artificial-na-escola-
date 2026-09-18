@@ -156,7 +156,7 @@ function loadQuestion() {
     optionsContainer.appendChild(button);
   });
 
-  // Atualizar botão da última pergunta
+  // Atualizar texto do botão na última pergunta
   if (currentQuestionIndex === quizData.length - 1) {
     nextButton.textContent = 'Ver resultado 🌸';
   } else {
@@ -186,3 +186,95 @@ function selectOption(selectedIndex, selectedButton) {
   } else {
     selectedButton.classList.add('wrong');
     feedbackMessage.textContent = `💔 Resposta incorreta. A certa é: ${currentQuestion.options[currentQuestion.answer]}`;
+    allOptions[currentQuestion.answer].classList.add('correct');
+  }
+
+  nextButton.disabled = false;
+}
+
+function nextQuestion() {
+  if (!answered) return;
+
+  currentQuestionIndex++;
+
+  if (currentQuestionIndex < quizData.length) {
+    loadQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  quizArea.classList.add('hidden');
+  resultScreen.classList.remove('hidden');
+  
+  const totalQuestions = quizData.length;
+  const percentage = (score / totalQuestions) * 100;
+  
+  scoreText.textContent = `Você acertou ${score} de ${totalQuestions} perguntas!`;
+
+  // Mensagem personalizada baseada no desempenho
+  let message = '';
+  if (percentage === 100) {
+    message = '🌟 Perfeito! Você está mais que pronto para o vestibular!';
+  } else if (percentage >= 70) {
+    message = '💖 Muito bem! Continue estudando, você está no caminho certo!';
+  } else if (percentage >= 50) {
+    message = '🌸 Bom trabalho! Revise os conteúdos e tente novamente!';
+  } else {
+    message = '💪 Não desanime! Estude mais um pouco e você vai conseguir!';
+  }
+  resultMessage.textContent = message;
+
+  progressBar.style.width = '100%';
+}
+
+function restartQuiz() {
+  currentQuestionIndex = 0;
+  score = 0;
+  answered = false;
+
+  resultScreen.classList.add('hidden');
+  quizArea.classList.remove('hidden');
+
+  progressBar.style.width = '0%';
+  loadQuestion();
+}
+
+// ============ FUNÇÕES DE TEMA ============
+
+function toggleTheme() {
+  document.body.classList.toggle('dark-theme');
+  const isDark = document.body.classList.contains('dark-theme');
+  
+  themeIcon.textContent = isDark ? '☀️' : '🌙';
+  
+  try {
+    localStorage.setItem('quizVestibular-theme', isDark ? 'dark' : 'light');
+  } catch (e) {
+    // localStorage indisponível
+  }
+}
+
+function loadSavedTheme() {
+  try {
+    const savedTheme = localStorage.getItem('quizVestibular-theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark-theme');
+      themeIcon.textContent = '☀️';
+    }
+  } catch (e) {
+    // Ignora erros de localStorage
+  }
+}
+
+// ============ EVENT LISTENERS ============
+
+nextButton.addEventListener('click', nextQuestion);
+restartButton.addEventListener('click', restartQuiz);
+themeToggle.addEventListener('click', toggleTheme);
+
+// ============ INICIALIZAÇÃO ============
+
+loadSavedTheme();
+loadQuestion();
